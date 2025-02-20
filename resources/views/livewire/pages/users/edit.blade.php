@@ -3,22 +3,20 @@
 use function Livewire\Volt\{state, mount, updated};
 use App\Models\User;
 
-state(['id','data','name','email']);
-    mount (function ($id)
-    {
-        $this->id = $id;
-        $this->data = User::find($id);
 
+state(['id', 'data', 'name', 'email']);
+mount(function ($id) {
+    $this->id = $id;
+    $this->data = User::find($id);
 
-        $this->name = $this->data->name;
-        $this->email = $this->data->email;
-    });
+    $this->name = $this->data->name;
+    $this->email = $this->data->email;
+});
 
-$update = function ()
-{
+$update = function () {
     $this->validate([
         'name' => 'required|string',
-        'email' => 'required|string|email|unique:users,email,'.$this->id,
+        'email' => 'required|string|email|unique:users,email,' . $this->id,
     ]);
 
     $this->data->name = $this->name;
@@ -29,7 +27,7 @@ $update = function ()
 };
 
 
- ?>
+?>
 
 <div>
     <form wire:submit.prevent="update">
@@ -42,10 +40,12 @@ $update = function ()
         <label>Email:</label>
         <input type="text" wire:model="email">
         @error('email')
-        <p class="text-red-500">{{ $message }}</p>
+        <p class="hover:underline text-red-500 hover:text-blue-500">{{ $message }}</p>
         @enderror
 
         <button type="submit">Update</button>
+        <button class="text-white px-4 sm:px-8 py-2 sm:py-3 bg-sky-700 hover:bg-sky-800">...</button>
+
     </form>
 
     @if (session()->has('message'))
